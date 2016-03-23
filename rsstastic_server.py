@@ -100,6 +100,15 @@ def reload_config() :
         config = json.load(cfile)
     update_items(get_reader(config))
 
+@get('/readall')
+def read_all() :
+    items = get_items()
+    read = get_read()
+    unread = []
+    for k in items :
+        if k not in read :
+            unread.append(k)
+    add_read(unread)
 @get('/reload')
 def reload() :
     reload_config()
@@ -108,5 +117,6 @@ def reload() :
 if __name__ == '__main__' :
     import atom
     import rss
+    import update
     reload_config()
     run(host='localhost',port=5000)

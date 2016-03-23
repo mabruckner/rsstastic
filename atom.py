@@ -15,7 +15,13 @@ class AtomReader() :
         items = {}
         for item in root.findall(namespace+'entry') :
             atomid = item.find(namespace+'id').text
-            summary = item.find(namespace+'summary').text
+            summary = item.find(namespace+'summary')
+            if summary == None :
+                title = item.find(namespace+'title').text
+                link = item.find(namespace+'link').get('href')
+                summary = '<a href="{}">{}</a>'.format(link,title)
+            else :
+                summary = summary.text
             updated = int(dateutil.parser.parse(item.find(namespace+'updated').text).timestamp())
             items[atomid] = (updated,summary)
         return items

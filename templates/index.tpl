@@ -1,6 +1,7 @@
 % rebase('templates/base.tpl')
 % from util import get_url
 <a href="/reload">reload</a>
+<a href="/readall">mark all as read</a>
 <h2>Unread</h2>
 <ul>
     % for item in unread :
