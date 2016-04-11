@@ -1,4 +1,5 @@
 import json
+import traceback
 
 readermap = {}
 
@@ -24,8 +25,11 @@ class Aggregator() :
         items = {}
         for name in self.readers :
             reader = self.readers[name]
-            for k,v in reader.get_items().items() :
-                items[json.dumps([name,k])] = v
+            try :
+                for k,v in reader.get_items().items() :
+                    items[json.dumps([name,k])] = v
+            except Exception as e :
+                traceback.print_exc()
         return items
     def retrieve(self,key,data) :
         dat = json.loads(key)
