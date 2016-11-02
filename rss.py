@@ -19,7 +19,10 @@ class RssReader() :
                 summary = item.find('description').text
             else :
                 summary = summary.text
-            updated = int(dateutil.parser.parse(item.find('pubDate').text).timestamp())
+            pubDate = item.find('pubDate')
+            updated = int(time.time())
+            if pubDate is not None:
+                updated = int(dateutil.parser.parse(item.find('pubDate').text).timestamp())
             items[guid] = (updated,summary)
         return items
     def retrieve(self,key,item) :

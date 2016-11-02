@@ -83,6 +83,11 @@ def item(name):
         keys = list(items.keys())
         keys.sort(key=lambda x: items[x][0])
         index = keys.index(realid)
+        next_unread = None
+        for i in range(index+1, len(keys)):
+            if keys[i] not in read:
+                next_unread = keys[i]
+                break
         next = None if index+1 == len(keys) else keys[index+1]
         prev = keys[index-1]
         return template(
@@ -91,6 +96,7 @@ def item(name):
                 itemid=realid,
                 timestamp=items[realid][0],
                 next=next,
+                next_unread=next_unread,
                 prev=prev)
     abort(404,"unable to find item")
 
